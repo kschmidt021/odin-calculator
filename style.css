@@ -17,6 +17,7 @@ body {
     align-self: center;
     margin-top: 64px;
     box-shadow: rgba(0, 0, 0, 0.44) 0px 3px 8px;
+    border-radius: 15px;
 }
 
 .screen {
@@ -24,6 +25,7 @@ body {
     background-color: antiquewhite;
     flex-basis: 100px;
     margin: 16px;
+    border-radius: 15px;
 }
 
 .control {
