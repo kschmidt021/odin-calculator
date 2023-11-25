@@ -1,8 +1,15 @@
+// Initialize global variables
 const numberButtons = document.querySelector(".btn-controls-nums");
-// let history = [];
+const operatorButtons = document.querySelector(".numerics");
+const equalsButton = document.querySelector("#equals");
+const clearButton = document.querySelector("#clear");
+const screenDiv = document.querySelector(".screen");
+let history = [];
 let currentVal = 0;
+let operator = '';
 // operate(a, b, "+");
 
+// Event listener for number buttons
 numberButtons.addEventListener("click", (event) => {
     let target = event.target;
     switch (target.id) {
@@ -37,40 +44,62 @@ numberButtons.addEventListener("click", (event) => {
             currentVal +=  0;
             break;
     }
+    // makes the integers display as a string, so they concat instead of sum
     currentVal = currentVal.toString();
     displayVal(currentVal);
 })
 
-function displayVal(currentVal) {
-    screenDiv = document.querySelector(".screen");
-    screenDiv.textContent = currentVal;
-
-}
-
-function operate(a, b, operator) {
-    if (operator == "+") {
-        add(a , b);
-    } else if (operator == "-"){
-        subtract(a , b);
-    } else if (operator == "*") {
-        multiply(a , b);
-    } else if (operator == "/") {
-        divide(a , b);
+// Event listener for operator buttons
+operatorButtons.addEventListener("click", (event) => {
+    let target = event.target;
+    switch (target.id) {
+        case "add":
+            operator = "+";
+            break;
+        case "subtract":
+            operator = "-";
+            break;
+        case "multiply":
+            operator = "*";
+            break;
+        case "divide":
+            operator = "/";
+            break;
     }
+    // save the previously entered number to history and re-initialize the value
+    history.push(+currentVal);
+    currentVal = 0;
+    if (history.length > 1) {
+        operate(history, operator);
+    }
+})
+
+// displays the most recent value as a string on the screen
+function displayVal(currentVal) {
+    screenDiv.textContent = currentVal;
 }
 
-function add(a , b) {
-    return a + b;
+// Event listener for the equals button
+equalsButton.addEventListener("click", operate(history, operator));
+
+
+// performs the math on the last 2 numbers in history
+function operate(history, operator) {
+    if (operator == "+") {
+        currentVal = history.slice(-2).reduce((total, val) => total + val);
+    } else if (operator == "-"){
+        currentVal = history.slice(-2).reduce((total, val) => total - val);
+    } else if (operator == "*") {
+        currentVal = history.slice(-2).reduce((total, val) => total * val);
+    } else if (operator == "/") {
+        currentVal = history.slice(-2).reduce((total, val) => total / val);
+    }
+    screenDiv.textContent = currentVal;
 }
 
-function subtract(a , b) {
-    return a - b;
-}
-
-function multiply(a , b) {
-    return a * b;
-}
-
-function divide(a , b) {    
-    return a / b; 
-}
+// Event listener for clear button
+clearButton.addEventListener("click", () => {
+    currentVal = 0;
+    history = [];
+    screenDiv.textContent = currentVal;
+})
