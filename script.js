@@ -1,35 +1,53 @@
 const numberButtons = document.querySelector(".btn-controls-nums");
-
-operate(2, 3, "+")
+// let history = [];
+let currentVal = 0;
+// operate(a, b, "+");
 
 numberButtons.addEventListener("click", (event) => {
     let target = event.target;
     switch (target.id) {
         case "one":
-            return 1;
+            currentVal +=  1;
+            break;
         case "two":
-            return 2;
+            currentVal +=  2;
+            break;
         case "three":
-            return 3;
+            currentVal +=  3;
+            break;
         case "four":
-            return 4;
+            currentVal +=  4;
+            break;
         case "five":
-            return 5;
+            currentVal +=  5;
+            break;
         case "six":
-            return 6;
+            currentVal +=  6;
+            break;
         case "seven":
-            return 7;
+            currentVal +=  7;
+            break;
         case "eight":
-            return 8;
+            currentVal +=  8;
+            break;
         case "nine":
-            return 9;
+            currentVal +=  9;
+            break;
         case "zero":
-            return 0;
+            currentVal +=  0;
+            break;
     }
+    currentVal = currentVal.toString();
+    displayVal(currentVal);
 })
 
+function displayVal(currentVal) {
+    screenDiv = document.querySelector(".screen");
+    screenDiv.textContent = currentVal;
+
+}
+
 function operate(a, b, operator) {
-    // find a way to have this function called with user inputs
     if (operator == "+") {
         add(a , b);
     } else if (operator == "-"){
