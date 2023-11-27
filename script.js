@@ -3,6 +3,7 @@ const numberButtons = document.querySelector(".btn-controls-nums");
 const operatorButtons = document.querySelector(".numerics");
 const equalsButton = document.querySelector("#equals");
 const clearButton = document.querySelector("#clear");
+const backButton = document.querySelector("#back")
 const screenDiv = document.querySelector(".screen");
 let history = [];
 let currentVal = 0;
@@ -51,6 +52,30 @@ numberButtons.addEventListener("click", (event) => {
 
 // Event listener for operator buttons
 operatorButtons.addEventListener("click", (event) => {
+    // if the user has typed a new CurrentVal and wants to do math on it
+    if (currentVal != 0) {
+        // save the previously entered number to history
+        history.push(+currentVal);
+        // change screen to last stored #
+        screenDiv.textContent = history[history.length-1];
+        // re-initialize current value
+        currentVal = 0;
+        if (history.length > 1 && operator != "=") {
+            operate(history, operator);
+        }
+    // if the user wants to do math on the last solution
+    } else if (currentVal === 0 && operator != "="){
+        operate(history, operator);
+    // protection against divide by 0
+    } else if (currentVal === "0" && operator == "/") {
+        alert("Nice try, criminal. You can't divide by zero here.");
+        currentVal = 0;
+        history = [];
+        operator = '';
+        screenDiv.textContent = currentVal;
+    }
+
+    // assign operator
     let target = event.target;
     switch (target.id) {
         case "add":
@@ -65,12 +90,10 @@ operatorButtons.addEventListener("click", (event) => {
         case "divide":
             operator = "/";
             break;
-    }
-    // save the previously entered number to history and re-initialize the value
-    history.push(+currentVal);
-    currentVal = 0;
-    if (history.length > 1) {
-        operate(history, operator);
+        case "equals":
+            operator = "=";
+            history = history.slice(history.length - 1);
+            return;
     }
 })
 
@@ -78,9 +101,6 @@ operatorButtons.addEventListener("click", (event) => {
 function displayVal(currentVal) {
     screenDiv.textContent = currentVal;
 }
-
-// Event listener for the equals button
-equalsButton.addEventListener("click", operate(history, operator));
 
 
 // performs the math on the last 2 numbers in history
@@ -94,12 +114,24 @@ function operate(history, operator) {
     } else if (operator == "/") {
         currentVal = history.slice(-2).reduce((total, val) => total / val);
     }
-    screenDiv.textContent = currentVal;
+    history.push(currentVal);
+    screenDiv.textContent = history[history.length-1];
+    currentVal = 0;
 }
 
 // Event listener for clear button
 clearButton.addEventListener("click", () => {
     currentVal = 0;
     history = [];
+    operator = '';
+    screenDiv.textContent = currentVal;
+})
+
+// Event listener for back button
+backButton.addEventListener("click", () => {
+    currentVal = currentVal.slice(0, -1);
+    if (currentVal == '') {
+        currentVal = 0;
+    }
     screenDiv.textContent = currentVal;
 })
