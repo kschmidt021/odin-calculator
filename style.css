@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     width: 400px;
     flex-basis: 500px;
-    background-color: red;
+    background-color: #19180A;
     align-self: center;
     margin-top: 64px;
     box-shadow: rgba(0, 0, 0, 0.44) 0px 3px 8px;
@@ -22,11 +22,21 @@ body {
 
 .screen {
     justify-self: stretch;
-    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    background-color: #DAE3E5;
     flex-basis: 100px;
     margin: 16px;
     border-radius: 15px;
     font-size: large;
+}
+
+.screen-text {
+    align-self: flex-end;
+    padding-right: 24px;
+    font-size: 40px;
+    margin: 10px 0px;
 }
 
 .control {
@@ -88,5 +98,19 @@ body {
 
 button {
     font-size: 42px;
+    background-color: #DAE3E5;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+button:hover {
+    background-color: #ABBFC4;
+    border-color: #8AE980;
+}
+
+#add:focus,
+#subtract:focus,
+#divide:focus,
+#multiply:focus {
+    background-color: #ABBFC4;
+    border-color: #8AE980;
 }

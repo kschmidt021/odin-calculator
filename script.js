@@ -5,10 +5,10 @@ const equalsButton = document.querySelector("#equals");
 const clearButton = document.querySelector("#clear");
 const backButton = document.querySelector("#back")
 const screenDiv = document.querySelector(".screen");
+const screenTxt = document.querySelector(".screen-text");
 let history = [];
 let currentVal = 0;
 let operator = '';
-// operate(a, b, "+");
 
 // Event listener for number buttons
 numberButtons.addEventListener("click", (event) => {
@@ -57,7 +57,7 @@ operatorButtons.addEventListener("click", (event) => {
         // save the previously entered number to history
         history.push(+currentVal);
         // change screen to last stored #
-        screenDiv.textContent = history[history.length-1];
+        screenTxt.textContent = history[history.length-1];
         // re-initialize current value
         currentVal = 0;
         if (history.length > 1 && operator != "=") {
@@ -72,7 +72,7 @@ operatorButtons.addEventListener("click", (event) => {
         currentVal = 0;
         history = [];
         operator = '';
-        screenDiv.textContent = currentVal;
+        screenTxt.textContent = currentVal;
     }
 
     // assign operator
@@ -99,7 +99,7 @@ operatorButtons.addEventListener("click", (event) => {
 
 // displays the most recent value as a string on the screen
 function displayVal(currentVal) {
-    screenDiv.textContent = currentVal;
+    screenTxt.textContent = currentVal;
 }
 
 
@@ -115,7 +115,7 @@ function operate(history, operator) {
         currentVal = history.slice(-2).reduce((total, val) => total / val);
     }
     history.push(currentVal);
-    screenDiv.textContent = history[history.length-1];
+    screenTxt.textContent = history[history.length-1];
     currentVal = 0;
 }
 
@@ -124,7 +124,7 @@ clearButton.addEventListener("click", () => {
     currentVal = 0;
     history = [];
     operator = '';
-    screenDiv.textContent = currentVal;
+    screenTxt.textContent = currentVal;
 })
 
 // Event listener for back button
@@ -133,5 +133,5 @@ backButton.addEventListener("click", () => {
     if (currentVal == '') {
         currentVal = 0;
     }
-    screenDiv.textContent = currentVal;
+    screenTxt.textContent = currentVal;
 })
