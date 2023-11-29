@@ -44,6 +44,8 @@ numberButtons.addEventListener("click", (event) => {
         case "zero":
             currentVal +=  0;
             break;
+        default:
+            return;
     }
     // makes the integers display as a string, so they concat instead of sum
     currentVal = currentVal.toString();
@@ -94,6 +96,8 @@ operatorButtons.addEventListener("click", (event) => {
             operator = "=";
             history = history.slice(history.length - 1);
             return;
+        default: 
+            return;
     }
 })
 
@@ -105,6 +109,9 @@ function displayVal(currentVal) {
 
 // performs the math on the last 2 numbers in history
 function operate(history, operator) {
+    if (history == []) {
+        clear();
+    }
     if (operator == "+") {
         currentVal = history.slice(-2).reduce((total, val) => total + val);
     } else if (operator == "-"){
@@ -120,12 +127,14 @@ function operate(history, operator) {
 }
 
 // Event listener for clear button
-clearButton.addEventListener("click", () => {
+clearButton.addEventListener("click", clear);
+
+function clear() {
     currentVal = 0;
     history = [];
     operator = '';
     screenTxt.textContent = currentVal;
-})
+}
 
 // Event listener for back button
 backButton.addEventListener("click", () => {
